@@ -1,8 +1,9 @@
-import React, { createContext, use, useState } from "react";
+import React, { createContext, use, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import NavBar from "../components/NavBar/NavBar";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../public/firebase.init";
@@ -37,8 +38,8 @@ const Root = () => {
       .then((userCredential) => {
         const currentUser = userCredential.user;
         console.log(currentUser);
-        // 2.1 set the user value
-        setUser(currentUser);
+        // 2.1 set the user value (commented due to setUser will be set in onAuthStateChange)
+        // setUser(currentUser);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -51,10 +52,25 @@ const Root = () => {
     handleSignUp,
     handleSignIn,
 
-    // 2.3 pass both the setUser with user
+    // 2.3 or 4.4 pass user
     // setUser,
     user,
   };
+
+  //  4.0 Applying onAuthStateChange in useEffect because because it can render 5 times or 10 without useEffect. using useEffect with empty dependency it will render one time. this auth works by monitoring the user state. if auth get the user it calls the arrow function with user as parameter.
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user);
+
+      // 4.2 set the setUser
+      setUser(user);
+      /* if (user) {
+        } else {
+        } */
+    });
+    // 4.3 if application is unmount or sign out it will erase all the data of user
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
