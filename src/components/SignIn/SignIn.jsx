@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import { valueContext } from "../../Root/Root";
 
 const SignIn = () => {
+  const { handleSignIn } = useContext(valueContext);
+  console.log(handleSignIn);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    handleSignIn(email, password);
+  };
+
   return (
     <div className="flex flex-col max-w-md mx-auto mt-10 p-6 rounded-md sm:p-10 bg-gray-900 text-gray-100">
       <div className="mb-8 text-center">
         <h1 className="my-3 text-4xl font-bold">Sign in</h1>
         <p className="text-sm text-gray-400">Sign in to access your account</p>
       </div>
-      <form className="space-y-12">
+      <form onSubmit={handleSubmit} className="space-y-12">
         <div className="space-y-4">
           <div>
             <label htmlFor="email" className="block mb-2 text-sm">
@@ -47,7 +58,7 @@ const SignIn = () => {
         <div className="space-y-2">
           <div>
             <button
-              type="button"
+              type="submit"
               className="w-full px-8 py-3 font-semibold rounded-md bg-violet-400 text-gray-900"
             >
               Sign in

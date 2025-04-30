@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import { valueContext } from "../../Root/Root";
 
 const SignUp = () => {
+  // 1.5 use the useContext and import the valueContext in useContext and set it into the same name variable
+  const { handleSignUp } = useContext(valueContext);
+  console.log(handleSignUp);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const confirmpassword = e.target.confirmpassword.value;
+    console.log(name, email, password, confirmpassword);
+    // 3.0 there is password validation using regular expression in conceptual session it is skipped here. I will do it letter
+
+    // 1.6 Now call the handleSignUp thats created in 1.3 and pass the email, password. Now the account is created in Firebase
+    handleSignUp(email, password);
+  };
   return (
     <div className="flex flex-col max-w-md mx-auto mt-10 p-6 rounded-md sm:p-10 bg-gray-900 text-gray-100">
       <div className="mb-8 text-center">
         <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
       </div>
-      <form className="space-y-12">
+      <form onSubmit={handleSubmit} className="space-y-12">
         <div className="space-y-4">
           <div>
             <label htmlFor="email" className="block mb-2 text-sm">
@@ -65,7 +82,7 @@ const SignUp = () => {
         <div className="space-y-2">
           <div>
             <button
-              type="button"
+              type="submit"
               className="w-full px-8 py-3 font-semibold rounded-md bg-violet-400 text-gray-900"
             >
               Sign Up
@@ -76,7 +93,7 @@ const SignUp = () => {
             <Link
               to="/signin"
               rel="noopener noreferrer"
-              className="hover:underline text-violet-400"
+              className="hover:underline text-violet-400 ml-2"
             >
               Sign In
             </Link>
