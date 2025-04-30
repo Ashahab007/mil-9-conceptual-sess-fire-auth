@@ -14,7 +14,7 @@ const SignUp = () => {
     const password = e.target.password.value;
     const confirmpassword = e.target.confirmpassword.value;
     console.log(name, email, password, confirmpassword);
-    // 3.0 there is password validation using regular expression in conceptual session it is skipped here. I will do it letter
+    // 3.0 there is password validation using regular expression in conceptual session it is skipped here. I will do it letter from conceptual session part-5 on 9:00 mins.
 
     // 1.6 Now call the handleSignUp thats created in 1.3 and pass the email, password. Now the account is created in Firebase
     handleSignUp(email, password);

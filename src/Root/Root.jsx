@@ -57,7 +57,7 @@ const Root = () => {
     user,
   };
 
-  //  4.0 Applying onAuthStateChange in useEffect because because it can render 5 times or 10 without useEffect. using useEffect with empty dependency it will render one time. this auth works by monitoring the user state. if auth get the user it calls the arrow function with user as parameter.
+  //  4.0 Applying onAuthStateChange in useEffect because because it can render 5 times or 10 without useEffect. using useEffect with empty dependency it will render one time. this auth works by monitoring the user state. if the auth state is changed i.e. user sign in or sing out. It calls the arrow function with user as parameter.
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log(user);
